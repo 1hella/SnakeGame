@@ -1,0 +1,70 @@
+Snake game
+Use Case Description
+
+1. A player controls a snake trying to collect fruits. The game ends when the snake touches the wall or itself.
+
+Triggers
+
+1. The game starts and the snake starts moving
+
+Actors
+
+1. User
+2. Snake
+3. Fruit
+4. Score
+5. SnakeGame
+
+Preconditions
+
+1. The snake is generated in a starting spot
+
+Goals
+
+1. To keep the snake alive as long as possible and eat as many fruits as possible
+
+Not Available
+
+1. 
+
+Steps of Execution
+
+1. The snake is generated on the screen
+2. The snake starts moving forward
+3. A fruit is generated
+4. The snake gets the fruit
+5. The snake grows longer and the score is incremented
+6. The game continues until the snake collides with itself or the wall
+
+
+Snake growing
+Use Case Description
+
+1. The snake eats a fruit and then grows by one unit.
+
+Triggers
+
+1. The snake eats a fruit
+
+Actors
+
+1. Snake
+2. Fruit
+
+
+Preconditions
+
+1. The snake is not touching a wall.
+
+Goals
+
+1. To have the snake grow by one unit and still be valid
+
+Not Available
+
+1. Growing into a wall
+
+Steps of Execution
+
+1. The snake eats a fruit
+2. The snake grows by one unit. In other words the body stays the same and the head grows.

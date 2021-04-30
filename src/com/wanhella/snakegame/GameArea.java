@@ -1,0 +1,58 @@
+package com.wanhella.snakegame;
+
+import java.awt.*;
+
+public class GameArea {
+    private Fruit fruit;
+    private Snake snake;
+    private final int NUM_ROWS;
+    private final int NUM_COLS;
+
+    public GameArea(int numRows, int numCols) {
+        this.NUM_ROWS = numRows;
+        this.NUM_COLS = numCols;
+        this.generateFruit();
+        this.placeSnake();
+    }
+
+    public void generateFruit() {
+        int x = (int) (Math.random() * NUM_ROWS);
+        int y = (int) (Math.random() * NUM_COLS);
+        this.fruit = new Fruit(x, y);
+    }
+
+    private void placeSnake() {
+        this.snake = new Snake(NUM_ROWS / 2, NUM_COLS / 2, Direction.NORTH);
+    }
+
+    public boolean isSnakeTouchingWall() {
+        Point snakePosition = snake.getPosition();
+        return snakePosition.x == 0 || snakePosition.x == NUM_COLS - 1
+                || snakePosition.y == 0 || snakePosition.y == NUM_ROWS;
+    }
+
+    public boolean hasFruit() {
+        return fruit != null;
+    }
+
+    public Snake getSnake() {
+        return snake;
+    }
+
+    public void clearFruit() {
+        fruit = null;
+    }
+
+    public boolean isSnakeTouchingFruit() {
+        Point snakePosition = snake.getPosition();
+        return fruit != null && snakePosition.equals(fruit.getPosition());
+    }
+
+    public Fruit getFruit() {
+        return fruit;
+    }
+
+    public boolean isSnakeTouchingItself() {
+        return snake.isTouchingSelf();
+    }
+}
