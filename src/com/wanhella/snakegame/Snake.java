@@ -76,16 +76,16 @@ public class Snake {
         Point newPoint = new Point();
         switch (direction) {
             case NORTH:
-                newPoint = new Point(head.x, head.y + 1);
+                newPoint = new Point(head.x - 1, head.y);
                 break;
             case SOUTH:
-                newPoint = new Point(head.x, head.y - 1);
-                break;
-            case EAST:
                 newPoint = new Point(head.x + 1, head.y);
                 break;
+            case EAST:
+                newPoint = new Point(head.x, head.y + 1);
+                break;
             case WEST:
-                newPoint = new Point(head.x - 1, head.y);
+                newPoint = new Point(head.x, head.y - 1);
                 break;
         }
         positions[length - 1] = newPoint;
@@ -99,7 +99,7 @@ public class Snake {
         this.isGrowing = true;
         if (length + 1 > positions.length) {
             Point[] newPositions = new Point[positions.length * 2];
-            System.arraycopy(positions, 0, newPositions, 0, length - 1);
+            System.arraycopy(positions, 0, newPositions, 0, length);
             positions = newPositions;
         }
     }
@@ -117,7 +117,7 @@ public class Snake {
 
     public boolean isAtPosition(Point point) {
         for (Point p : positions) {
-            if (p.equals(point)) {
+            if (p != null && p.equals(point)) {
                 return true;
             }
         }

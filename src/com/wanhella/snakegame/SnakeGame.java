@@ -2,13 +2,13 @@ package com.wanhella.snakegame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class SnakeGame {
     private static final int NUM_ROWS = 50;
     private static final int NUM_COLS = 50;
+    private static final int DELAY_MILLIS = 200;
     GameArea gameArea;
 
     public SnakeGame() {
@@ -22,15 +22,49 @@ public class SnakeGame {
 
         SnakeGame snakeGame = new SnakeGame();
         snakeGame.drawGame(frame);
+        frame.setFocusable(true);
+        KeyListener listener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                snakeGame.keyPressed(e);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                snakeGame.keyReleased(e);
+            }
+        };
+        frame.addKeyListener(listener);
         frame.setVisible(true);
         while (!snakeGame.isGameOver()) {
             snakeGame.gamePlayLoop();
             snakeGame.drawGame(frame);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(DELAY_MILLIS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void keyReleased(KeyEvent e) {
+
+    }
+
+    private void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            gameArea.getSnake().turn(Direction.WEST);
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            gameArea.getSnake().turn(Direction.EAST);
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            gameArea.getSnake().turn(Direction.NORTH);
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            gameArea.getSnake().turn(Direction.SOUTH);
         }
     }
 
@@ -38,11 +72,11 @@ public class SnakeGame {
         frame.getContentPane().removeAll();
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
-                JLabel label = new JLabel("asdf");
-                if (gameArea.getFruit().getPosition().equals(new Point(i, j))) {
-                    label.setBackground(Color.red);
-                } else if (gameArea.getSnake().isAtPosition(new Point(i, j))) {
+                JLabel label = new JLabel("    ");
+                if (gameArea.getSnake().isAtPosition(new Point(i, j))) {
                     label.setBackground((Color.green));
+                } else if (gameArea.getFruit() != null && gameArea.getFruit().getPosition().equals(new Point(i, j))) {
+                    label.setBackground(Color.red);
                 } else {
                     label.setBackground(Color.BLACK);
                 }
@@ -62,9 +96,6 @@ public class SnakeGame {
             gameArea.clearFruit();
             gameArea.getSnake().grow();
         }
-//        if (directionalInput != null) {
-//            gameArea.getSnake().turn(directionalInput);
-//        }
         gameArea.getSnake().move();
     }
 
