@@ -113,7 +113,7 @@ public class SnakeGame {
     }
 
     private boolean isGameOver() {
-        return gameArea.isSnakeTouchingWall() || gameArea.isSnakeTouchingItself();
+        return gameArea.isSnakeTouchingWall() || gameArea.isSnakeTouchingSelf();
     }
 
     private static JFrame makeJFrame() {

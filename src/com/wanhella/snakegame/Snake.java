@@ -5,7 +5,7 @@ import java.awt.*;
 public class Snake {
     private static final int DEFAULT_LENGTH = 10;
     private int length = DEFAULT_LENGTH;
-    private Point[] positions; // length is the head, 0 is the tail
+    private Point[] positions; // length - 1 is the head, 0 is the tail
     private Direction direction;
     private boolean isGrowing = false;
 

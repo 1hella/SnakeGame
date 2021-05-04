@@ -52,7 +52,7 @@ public class GameArea {
         return fruit;
     }
 
-    public boolean isSnakeTouchingItself() {
+    public boolean isSnakeTouchingSelf() {
         return snake.isTouchingSelf();
     }
 }
