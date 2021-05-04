@@ -4,12 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.InvocationTargetException;
 
 public class SnakeGame {
     private static final int NUM_ROWS = 50;
     private static final int NUM_COLS = 50;
     private static final int DELAY_MILLIS = 200;
-    GameArea gameArea;
+    private GameArea gameArea;
+    private int score = 0;
 
     public SnakeGame() {
         this.gameArea = new GameArea(NUM_ROWS, NUM_COLS);
@@ -17,8 +19,6 @@ public class SnakeGame {
 
     public static void main(String[] args) {
         JFrame frame = makeJFrame();
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         SnakeGame snakeGame = new SnakeGame();
         snakeGame.drawGame(frame);
@@ -43,7 +43,12 @@ public class SnakeGame {
         frame.setVisible(true);
         while (!snakeGame.isGameOver()) {
             snakeGame.gamePlayLoop();
-            snakeGame.drawGame(frame);
+            try {
+                SwingUtilities.invokeAndWait(() -> snakeGame.drawGame(frame));
+            } catch (InterruptedException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
             try {
                 Thread.sleep(DELAY_MILLIS);
             } catch (InterruptedException e) {
@@ -70,6 +75,9 @@ public class SnakeGame {
 
     private void drawGame(JFrame frame) {
         frame.getContentPane().removeAll();
+        JPanel gamePanel = new JPanel();
+        gamePanel.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
+        frame.add(gamePanel, BorderLayout.CENTER);
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
                 JLabel label = new JLabel("    ");
@@ -81,9 +89,13 @@ public class SnakeGame {
                     label.setBackground(Color.BLACK);
                 }
                 label.setOpaque(true);
-                frame.add(label);
+                gamePanel.add(label);
             }
         }
+        JLabel scoreLabel = new JLabel(String.valueOf(score));
+        scoreLabel.setFont(new Font("Helvetica", Font.BOLD, 30));
+        scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        frame.add(scoreLabel, BorderLayout.SOUTH);
         frame.pack();
         frame.repaint();
     }
@@ -93,6 +105,7 @@ public class SnakeGame {
             gameArea.generateFruit();
         }
         if (gameArea.isSnakeTouchingFruit()) {
+            score++;
             gameArea.clearFruit();
             gameArea.getSnake().grow();
         }
@@ -103,9 +116,11 @@ public class SnakeGame {
         return gameArea.isSnakeTouchingWall() || gameArea.isSnakeTouchingItself();
     }
 
-    public static JFrame makeJFrame() {
-        JFrame frame = new JFrame();
-        frame.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
+    private static JFrame makeJFrame() {
+        JFrame frame = new JFrame("Snake Game");
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
         return frame;
     }
 }
