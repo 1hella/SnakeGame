@@ -1,4 +1,4 @@
-package com.wanhella.snakegame;
+package main.java.com.wanhella.snakegame;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class GameArea {
     }
 
     private void placeSnake() {
-        this.snake = new Snake(NUM_ROWS / 2, NUM_COLS / 2, Direction.NORTH);
+        this.snake = new Snake();
     }
 
     public boolean isSnakeTouchingWall() {

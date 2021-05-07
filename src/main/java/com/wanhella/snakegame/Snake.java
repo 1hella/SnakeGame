@@ -1,9 +1,9 @@
-package com.wanhella.snakegame;
+package main.java.com.wanhella.snakegame;
 
 import java.awt.*;
 
 public class Snake {
-    private static final int DEFAULT_LENGTH = 10;
+    public static final int DEFAULT_LENGTH = 10;
     private int length = DEFAULT_LENGTH;
     private Point[] positions; // length - 1 is the head, 0 is the tail
     private Direction direction;
@@ -14,7 +14,7 @@ public class Snake {
         this.direction = Direction.EAST;
         positions = new Point[length];
         for (int i = length - 1; i >= 0; i--) {
-            positions[i] = new Point(i, 0);
+            positions[i] = new Point(1, i);
         }
     }
 
@@ -23,20 +23,20 @@ public class Snake {
         this.positions = new Point[length];
 
         if (direction == Direction.NORTH) {
-            for (int i = y + length - 1; i >= y; i--) {
-                positions[i-y] = new Point(x, i);
+            for (int i = x; i < x + length; i++) {
+                positions[length - 1 - (i - x)] = new Point(i, x);
             }
         } else if (direction == Direction.SOUTH) {
-            for (int i = y - length + 1; i <= y; i++) {
-                positions[i - y + length - 1] = new Point(x, i);
+            for (int i = x - length + 1; i <= x; i++) {
+                positions[i - x + length - 1] = new Point(i, x);
             }
         } else if (direction == Direction.EAST) {
-            for (int i = x - length + 1; i <= x + length; i++) {
-                positions[i - x + length - 1] = new Point(i, y);
+            for (int i = y - length + 1; i <= y; i++) {
+                positions[length - 1 - (y - i)] = new Point(y, i);
             }
         } else if (direction == Direction.WEST) {
-            for (int i = x + length - 1; i >= x; i--) {
-                positions[i - x] = new Point(i, y);
+            for (int i = y + length - 1; i >= y; i--) {
+                positions[length - 1 - (i - y)] = new Point(y, i);
             }
         }
     }
@@ -122,5 +122,9 @@ public class Snake {
             }
         }
         return false;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }

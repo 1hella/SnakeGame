@@ -1,4 +1,4 @@
-package com.wanhella.snakegame;
+package main.java.com.wanhella.snakegame;
 
 import java.awt.*;
 
