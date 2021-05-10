@@ -81,9 +81,9 @@ public class SnakeGame {
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
                 JLabel label = new JLabel("    ");
-                if (gameArea.getSnake().isAtPosition(new Point(i, j))) {
+                if (gameArea.getSnake().isAtPosition(new Point(j, i))) {
                     label.setBackground((Color.green));
-                } else if (gameArea.getFruit() != null && gameArea.getFruit().getPosition().equals(new Point(i, j))) {
+                } else if (gameArea.getFruit() != null && gameArea.getFruit().getPosition().equals(new Point(j, i))) {
                     label.setBackground(Color.red);
                 } else {
                     label.setBackground(Color.BLACK);

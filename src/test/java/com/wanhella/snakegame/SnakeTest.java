@@ -12,14 +12,52 @@ public class SnakeTest {
     @Test
     public void constructor_default_stateExpected() {
         Snake s = new Snake();
-        assertEquals(new Point(1, Snake.DEFAULT_LENGTH - 1), s.getPosition());
+        assertEquals(new Point(Snake.DEFAULT_LENGTH - 1, 1), s.getPosition());
         assertEquals(Direction.EAST, s.getDirection());
+        assertEquals(Snake.DEFAULT_LENGTH, s.getLength());
     }
 
     @Test
-    public void constructor_paramaterized_stateExpected() {
-        Snake s = new Snake(10, 20, Direction.WEST);
-        assertEquals(new Point(10 + Snake.DEFAULT_LENGTH, 20), s.getPosition());
+    public void constructor_parameterized_stateExpected() {
+        Snake s = new Snake(20, 10, Direction.WEST);
+        assertEquals(new Point(20, 10), s.getPosition());
         assertEquals(Direction.WEST, s.getDirection());
+        assertEquals(Snake.DEFAULT_LENGTH, s.getLength());
+    }
+
+    @Test
+    public void move_default_stateExpected() {
+        Snake s = new Snake();
+        s.move();
+        assertEquals(new Point(Snake.DEFAULT_LENGTH, 1), s.getPosition());
+        assertEquals(Snake.DEFAULT_LENGTH, s.getLength());
+    }
+
+    @Test
+    public void grow_default_stateExpected() {
+        Snake s = new Snake();
+        s.grow();
+        assertEquals(Snake.DEFAULT_LENGTH, s.getLength());
+        assertEquals(new Point(Snake.DEFAULT_LENGTH - 1, 1), s.getPosition());
+        s.move();
+        assertEquals(new Point(Snake.DEFAULT_LENGTH, 1), s.getPosition());
+        assertEquals(Snake.DEFAULT_LENGTH + 1, s.getLength());
+    }
+
+    @Test
+    public void turn_south_stateExpected() {
+        Snake s = new Snake();
+        s.turn(Direction.SOUTH);
+        assertEquals(new Point(Snake.DEFAULT_LENGTH - 1, 1), s.getPosition());
+        s.move();
+        assertEquals(new Point( Snake.DEFAULT_LENGTH - 1, 2), s.getPosition());
+        assertEquals(Snake.DEFAULT_LENGTH, s.getLength());
+    }
+
+    @Test
+    public void turn_turnOpposite_noChange() {
+        Snake s = new Snake();
+        s.turn(Direction.WEST);
+        assertEquals(Direction.EAST, s.getDirection());
     }
 }

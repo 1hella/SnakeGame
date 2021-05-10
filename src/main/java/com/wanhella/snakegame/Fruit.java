@@ -6,7 +6,7 @@ public class Fruit {
     private Point position;
 
     public Fruit() {
-        this.position = new Point();
+        this.position = new Point(1,1);
     }
 
     public Fruit(Point position) {

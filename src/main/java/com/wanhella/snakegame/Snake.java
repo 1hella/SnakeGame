@@ -14,7 +14,7 @@ public class Snake {
         this.direction = Direction.EAST;
         positions = new Point[length];
         for (int i = length - 1; i >= 0; i--) {
-            positions[i] = new Point(1, i);
+            positions[i] = new Point(i, 1);
         }
     }
 
@@ -23,20 +23,20 @@ public class Snake {
         this.positions = new Point[length];
 
         if (direction == Direction.NORTH) {
-            for (int i = x; i < x + length; i++) {
-                positions[length - 1 - (i - x)] = new Point(i, x);
+            for (int i = y; i < y + length; i++) {
+                positions[length - 1 - (i - y)] = new Point(x, i);
             }
         } else if (direction == Direction.SOUTH) {
-            for (int i = x - length + 1; i <= x; i++) {
-                positions[i - x + length - 1] = new Point(i, x);
+            for (int i = y - length + 1; i <= y; i++) {
+                positions[i - y + length - 1] = new Point(x, i);
             }
         } else if (direction == Direction.EAST) {
-            for (int i = y - length + 1; i <= y; i++) {
-                positions[length - 1 - (y - i)] = new Point(y, i);
+            for (int i = x - length + 1; i <= x; i++) {
+                positions[length - 1 - (x - i)] = new Point(i, y);
             }
         } else if (direction == Direction.WEST) {
-            for (int i = y + length - 1; i >= y; i--) {
-                positions[length - 1 - (i - y)] = new Point(y, i);
+            for (int i = x + length - 1; i >= x; i--) {
+                positions[length - 1 - (i - x)] = new Point(i, y);
             }
         }
     }
@@ -76,16 +76,16 @@ public class Snake {
         Point newPoint = new Point();
         switch (direction) {
             case NORTH:
-                newPoint = new Point(head.x - 1, head.y);
+                newPoint = new Point(head.x, head.y - 1);
                 break;
             case SOUTH:
-                newPoint = new Point(head.x + 1, head.y);
-                break;
-            case EAST:
                 newPoint = new Point(head.x, head.y + 1);
                 break;
+            case EAST:
+                newPoint = new Point(head.x + 1, head.y);
+                break;
             case WEST:
-                newPoint = new Point(head.x, head.y - 1);
+                newPoint = new Point(head.x - 1, head.y);
                 break;
         }
         positions[length - 1] = newPoint;
@@ -126,5 +126,9 @@ public class Snake {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public int getLength() {
+        return length;
     }
 }

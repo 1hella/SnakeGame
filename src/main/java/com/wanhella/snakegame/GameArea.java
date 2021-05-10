@@ -16,19 +16,30 @@ public class GameArea {
     }
 
     public void generateFruit() {
-        int x = (int) (Math.random() * NUM_ROWS - 1) + 1;
-        int y = (int) (Math.random() * NUM_COLS - 1) + 1;
+        int x = (int) (Math.random() * NUM_COLS - 2) + 1;
+        int y = (int) (Math.random() * NUM_ROWS - 2) + 1;
         this.fruit = new Fruit(x, y);
+    }
+
+    public void generateFruit(int x, int y) {
+        if (x < 1 || x > NUM_COLS - 2 || y < 1 || y > NUM_ROWS - 2) {
+            throw new IllegalArgumentException();
+        }
+        this.fruit = new Fruit(x,y);
     }
 
     private void placeSnake() {
         this.snake = new Snake();
     }
 
+    public void placeSnake(int x, int y, Direction direction) {
+        this.snake = new Snake(x, y, direction);
+    }
+
     public boolean isSnakeTouchingWall() {
         Point snakePosition = snake.getPosition();
         return snakePosition.x == 0 || snakePosition.x == NUM_COLS - 1
-                || snakePosition.y == 0 || snakePosition.y == NUM_ROWS;
+                || snakePosition.y == 0 || snakePosition.y == NUM_ROWS - 1;
     }
 
     public boolean hasFruit() {
@@ -54,5 +65,13 @@ public class GameArea {
 
     public boolean isSnakeTouchingSelf() {
         return snake.isTouchingSelf();
+    }
+
+    public int getNumRows() {
+        return NUM_ROWS;
+    }
+
+    public int getNumCols() {
+        return NUM_COLS;
     }
 }
