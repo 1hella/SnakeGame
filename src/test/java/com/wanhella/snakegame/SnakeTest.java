@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SnakeTest {
     @Test
@@ -59,5 +59,17 @@ public class SnakeTest {
         Snake s = new Snake();
         s.turn(Direction.WEST);
         assertEquals(Direction.EAST, s.getDirection());
+    }
+
+    @Test
+    public void isAtPosition_default_true() {
+        Snake s = new Snake();
+        assertTrue(s.isAtPosition(new Point(1, 1)));
+    }
+
+    @Test
+    public void isAtPosition_default_false() {
+        Snake s = new Snake();
+        assertFalse(s.isAtPosition(new Point(2, 2)));
     }
 }

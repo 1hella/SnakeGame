@@ -2,6 +2,8 @@ package test.java.com.wanhella.snakegame;
 
 import main.java.com.wanhella.snakegame.Direction;
 import main.java.com.wanhella.snakegame.GameArea;
+import main.java.com.wanhella.snakegame.Snake;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,5 +83,40 @@ public class GameAreaTest {
         assertFalse(gameArea.isSnakeTouchingFruit());
         gameArea.getSnake().move();
         assertTrue(gameArea.isSnakeTouchingFruit());
+    }
+
+    @Test
+    public void generateFruit_outOfBounds_exception() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> gameArea.generateFruit(0, 1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> gameArea.generateFruit(1, 0));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> gameArea.generateFruit(NUM_COLS - 1, 1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> gameArea.generateFruit(0, NUM_ROWS - 1));
+    }
+
+    @Test
+    public void isSnakeTouchingSelf_default_true() {
+        Snake snake = gameArea.getSnake();
+        snake.turn(Direction.NORTH);
+        snake.move();
+        snake.turn(Direction.WEST);
+        snake.move();
+        snake.turn(Direction.SOUTH);
+        assertFalse(gameArea.isSnakeTouchingSelf());
+        snake.move();
+        assertTrue(gameArea.isSnakeTouchingSelf());
+    }
+
+    @Test
+    public void isSnakeTouchingSelf_parameterized_true() {
+        gameArea.placeSnake(NUM_COLS, NUM_ROWS, Direction.NORTH);
+        Snake snake = gameArea.getSnake();
+        snake.turn(Direction.EAST);
+        snake.move();
+        snake.turn(Direction.SOUTH);
+        snake.move();
+        snake.turn(Direction.WEST);
+        assertFalse(gameArea.isSnakeTouchingSelf());
+        snake.move();
+        assertTrue(gameArea.isSnakeTouchingSelf());
     }
 }

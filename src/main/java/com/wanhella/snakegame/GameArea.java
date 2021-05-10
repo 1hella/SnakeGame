@@ -16,8 +16,8 @@ public class GameArea {
     }
 
     public void generateFruit() {
-        int x = (int) (Math.random() * NUM_COLS - 2) + 1;
-        int y = (int) (Math.random() * NUM_ROWS - 2) + 1;
+        int x = (int) (Math.random() * (NUM_COLS - 2)) + 1;
+        int y = (int) (Math.random() * (NUM_ROWS - 2)) + 1;
         this.fruit = new Fruit(x, y);
     }
 

@@ -10,7 +10,7 @@ public class SnakeGame {
     private static final int NUM_ROWS = 50;
     private static final int NUM_COLS = 50;
     private static final int DELAY_MILLIS = 200;
-    private GameArea gameArea;
+    private final GameArea gameArea;
     private int score = 0;
 
     public SnakeGame() {
